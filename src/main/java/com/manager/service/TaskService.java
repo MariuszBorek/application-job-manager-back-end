@@ -3,15 +3,13 @@ package com.manager.service;
 import com.manager.model.Task;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TaskService {
 
     private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Task> archivedTasks = new HashMap<>();
     private Integer id = 0;
 
     public List<Task> findAllTask() {
@@ -31,9 +29,8 @@ public class TaskService {
         return task;
     }
 
-    public Integer autoIncrement() {
+    public void autoIncrement() {
         id = id + 1;
-        return id;
     }
 
     public Task updateTask(Task task) {
@@ -44,5 +41,23 @@ public class TaskService {
         foundTask.setPriority(task.getPriority());
         foundTask.setExecution(task.getExecution());
         return foundTask;
+    }
+
+    // ------------------------------------------------------------
+
+    public List<Task> getArchiveTasks() {
+        for (Task task : tasks.values()) {
+            if(task.getExecution().equals(true)) {
+                archivedTasks.put(task.getId(), task);
+            }
+        }
+        return new ArrayList<>(archivedTasks.values());
+    }
+
+    public List<Task> deleteFinishedTask(List<Task> tasks) {
+        for (Task task : tasks) {
+            this.tasks.remove(task.getId());
+        }
+        return tasks;
     }
 }

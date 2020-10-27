@@ -29,12 +29,23 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public Task updateTask(@RequestBody final Task task) {
-        taskService.updateTask(task);
-        return task;
+        return taskService.updateTask(task);
     }
 
     @DeleteMapping("/{id}")
     public Task deleteTask(@PathVariable("id") final Integer id) {
         return taskService.deleteTask(id);
+    }
+
+    // ------------------------------------------------------------
+
+    @GetMapping("/archive")
+    public List<Task> getArchivedTask() {
+        return taskService.getArchiveTasks();
+    }
+
+    @PostMapping("/finished")
+    public List<Task> clearFinishedTasks(@RequestBody final List<Task> tasks) {
+        return taskService.deleteFinishedTask(tasks);
     }
 }
