@@ -27,7 +27,7 @@ public class TaskController {
         return taskService.addTask(task);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update")
     public Task updateTask(@RequestBody final Task task) {
         return taskService.updateTask(task);
     }

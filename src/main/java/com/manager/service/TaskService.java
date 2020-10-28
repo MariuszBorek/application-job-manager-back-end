@@ -23,15 +23,17 @@ public class TaskService {
         return task;
     }
 
+    public void autoIncrement() {
+        id = id + 1;
+    }
+
     public Task deleteTask(Integer id) {
         Task task = tasks.get(id);
         tasks.remove(task.getId());
         return task;
     }
 
-    public void autoIncrement() {
-        id = id + 1;
-    }
+
 
     public Task updateTask(Task task) {
         Task foundTask = tasks.get(task.getId());
@@ -42,8 +44,6 @@ public class TaskService {
         foundTask.setExecution(task.getExecution());
         return foundTask;
     }
-
-    // ------------------------------------------------------------
 
     public List<Task> getArchiveTasks() {
         for (Task task : tasks.values()) {

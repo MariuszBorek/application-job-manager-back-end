@@ -4,7 +4,6 @@ package com.manager.model;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -17,7 +16,12 @@ public class Task {
     private Boolean priority;
     private Boolean execution;
 
-    public Task(Integer id, String topic, String text, LocalDate date, Boolean priority, Boolean execution) {
+    public Task(Integer id,
+                String topic,
+                String text,
+                LocalDate date,
+                Boolean priority,
+                Boolean execution) {
         this.id = id;
         this.topic = topic;
         this.text = text;
