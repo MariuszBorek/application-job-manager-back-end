@@ -12,6 +12,10 @@ public class TaskService {
     private final Map<Integer, Task> archivedTasks = new HashMap<>();
     private Integer id = 0;
 
+    public void autoIncrement() {
+        id = id + 1;
+    }
+
     public List<Task> findAllTask() {
         return new ArrayList<>(tasks.values());
     }
@@ -21,10 +25,6 @@ public class TaskService {
         task.setId(id);
         tasks.put(id, task);
         return task;
-    }
-
-    public void autoIncrement() {
-        id = id + 1;
     }
 
     public Task deleteTask(Integer id) {

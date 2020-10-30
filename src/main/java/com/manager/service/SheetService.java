@@ -12,6 +12,10 @@ public class SheetService {
     private final Map<Integer, Sheet> sheets = new HashMap<>();
     private Integer id = 0;
 
+    public void autoIncrement() {
+        id = id + 1;
+    }
+
     public List<Sheet> findAllSheet() {
         return new ArrayList<>(sheets.values());
     }
@@ -21,10 +25,6 @@ public class SheetService {
         sheet.setId(id);
         sheets.put(id, sheet);
         return sheet;
-    }
-
-    public void autoIncrement() {
-        id = id + 1;
     }
 
     public Sheet deleteSheet(Integer id) {
