@@ -33,8 +33,6 @@ public class TaskService {
         return task;
     }
 
-
-
     public Task updateTask(Task task) {
         Task foundTask = tasks.get(task.getId());
         foundTask.setTopic(task.getTopic());
