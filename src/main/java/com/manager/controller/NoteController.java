@@ -4,7 +4,6 @@ import com.manager.model.Note;
 import com.manager.service.NoteService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.ExcludeDefaultListeners;
 import java.util.List;
 
 @RestController
