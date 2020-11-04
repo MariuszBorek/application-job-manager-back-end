@@ -1,5 +1,7 @@
 package com.manager.model;
 
+import java.util.Objects;
+
 public class Scupper {
 
     private Integer id;
@@ -10,7 +12,8 @@ public class Scupper {
     private Double activeScupperArea;
     private Double waterLevel;
     private Double bottomScupperLevelOverRoof;
-    private Integer numberOfScuppers;
+    private Double numberOfScuppers;
+    private Double numberOfScuppersRound;
 
     public Scupper() {
     }
@@ -87,12 +90,21 @@ public class Scupper {
         return this;
     }
 
-    public Integer getNumberOfScuppers() {
+    public Double getNumberOfScuppers() {
         return numberOfScuppers;
     }
 
-    public Scupper setNumberOfScuppers(Integer numberOfScuppers) {
+    public Scupper setNumberOfScuppers(Double numberOfScuppers) {
         this.numberOfScuppers = numberOfScuppers;
+        return this;
+    }
+
+    public Double getNumberOfScuppersRound() {
+        return numberOfScuppersRound;
+    }
+
+    public Scupper setNumberOfScuppersRound(Double numberOfScuppersRound) {
+        this.numberOfScuppersRound = numberOfScuppersRound;
         return this;
     }
 
@@ -107,6 +119,29 @@ public class Scupper {
         scupper.waterLevel = this.waterLevel;
         scupper.bottomScupperLevelOverRoof = this.bottomScupperLevelOverRoof;
         scupper.numberOfScuppers = this.numberOfScuppers;
+        scupper.numberOfScuppersRound = this.numberOfScuppersRound;
         return scupper;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scupper scupper = (Scupper) o;
+        return Objects.equals(id, scupper.id) &&
+                Objects.equals(roofArea, scupper.roofArea) &&
+                Objects.equals(scupperSideX, scupper.scupperSideX) &&
+                Objects.equals(scupperSideY, scupper.scupperSideY) &&
+                Objects.equals(realScupperArea, scupper.realScupperArea) &&
+                Objects.equals(activeScupperArea, scupper.activeScupperArea) &&
+                Objects.equals(waterLevel, scupper.waterLevel) &&
+                Objects.equals(bottomScupperLevelOverRoof, scupper.bottomScupperLevelOverRoof) &&
+                Objects.equals(numberOfScuppers, scupper.numberOfScuppers) &&
+                Objects.equals(numberOfScuppersRound, scupper.numberOfScuppersRound);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roofArea, scupperSideX, scupperSideY, realScupperArea, activeScupperArea, waterLevel, bottomScupperLevelOverRoof, numberOfScuppers, numberOfScuppersRound);
     }
 }
