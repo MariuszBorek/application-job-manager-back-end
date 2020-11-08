@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Scupper {
 
     private Integer id;
+    private String projectName;
     private Double roofArea;
     private Double scupperSideX;
     private Double scupperSideY;
@@ -24,6 +25,15 @@ public class Scupper {
 
     public Scupper setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public Scupper setProjectName(String projectName) {
+        this.projectName = projectName;
         return this;
     }
 
@@ -111,6 +121,7 @@ public class Scupper {
     public Scupper build() {
         Scupper scupper = new Scupper();
         scupper.id = this.id;
+        scupper.projectName = this.projectName;
         scupper.roofArea = this.roofArea;
         scupper.scupperSideX = this.scupperSideX;
         scupper.scupperSideY = this.scupperSideY;
@@ -129,6 +140,7 @@ public class Scupper {
         if (o == null || getClass() != o.getClass()) return false;
         Scupper scupper = (Scupper) o;
         return Objects.equals(id, scupper.id) &&
+                Objects.equals(projectName, scupper.projectName) &&
                 Objects.equals(roofArea, scupper.roofArea) &&
                 Objects.equals(scupperSideX, scupper.scupperSideX) &&
                 Objects.equals(scupperSideY, scupper.scupperSideY) &&
@@ -142,6 +154,6 @@ public class Scupper {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roofArea, scupperSideX, scupperSideY, realScupperArea, activeScupperArea, waterLevel, bottomScupperLevelOverRoof, numberOfScuppers, numberOfScuppersRound);
+        return Objects.hash(id, projectName, roofArea, scupperSideX, scupperSideY, realScupperArea, activeScupperArea, waterLevel, bottomScupperLevelOverRoof, numberOfScuppers, numberOfScuppersRound);
     }
 }

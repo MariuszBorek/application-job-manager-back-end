@@ -3,10 +3,10 @@ package com.manager.service;
 import com.manager.model.Scupper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ScupperService {
@@ -18,19 +18,24 @@ public class ScupperService {
         id = id + 1;
     }
 
-    public Scupper countScuppers(String roofArea,
+    public Scupper countScuppers(String projectName,
+                                 String roofArea,
                                  String scupperSideX,
                                  String scupperSideY,
                                  String bottomScupperLevelOverRoof,
                                  String waterLevel) {
+
+
         Double roofAreaNo = checkIfDoubleCorrectAndConvert(roofArea);
         Double scupperSideXNo = checkIfDoubleCorrectAndConvert(scupperSideX);
         Double scupperSideYNo = checkIfDoubleCorrectAndConvert(scupperSideY);
-        Double bottomScupperLevelOverRoofNo = checkIfDoubleCorrectAndConvert(bottomScupperLevelOverRoof);
-        Double waterLevelNo = checkIfDoubleCorrectAndConvert(waterLevel);
+        Double bottomScupperLevelOverRoofNo = checkBottomScupperLevelOverRoofOrReturnDefaultValue(bottomScupperLevelOverRoof);
+        Double waterLevelNo = checkWaterLevelOrReturnDefaultValue(waterLevel);
 
-        double numberOfScuppers = 0;
-        double activeScupperArea = 0;
+
+
+        double numberOfScuppers = 0.0;
+        double activeScupperArea = 0.0;
         double realScupperArea = scupperSideXNo * scupperSideYNo;
 
         double allScuppersArea = roofAreaNo * 0.03 * 0.8 * 25;
@@ -45,9 +50,11 @@ public class ScupperService {
             activeScupperArea = scupperSideXNo * scupperSideYNo;
             numberOfScuppers = allScuppersArea / activeScupperArea;
         } else {
-            numberOfScuppers = 0;
+            numberOfScuppers = 0.0;
         }
+
         return new Scupper()
+                .setProjectName(projectName.trim())
                 .setRoofArea(roofAreaNo)
                 .setScupperSideX(scupperSideXNo)
                 .setScupperSideY(scupperSideYNo)
@@ -55,13 +62,43 @@ public class ScupperService {
                 .setActiveScupperArea(activeScupperArea)
                 .setWaterLevel(waterLevelNo)
                 .setBottomScupperLevelOverRoof(bottomScupperLevelOverRoofNo)
-                .setNumberOfScuppers(numberOfScuppers)
+                .setNumberOfScuppers(RoundToTwoDecimalPlaces(numberOfScuppers))
                 .setNumberOfScuppersRound(Math.ceil(numberOfScuppers))
                 .build();
     }
 
+    private Double RoundToTwoDecimalPlaces(Double numberOfScuppers) {
+        if(!(numberOfScuppers == 0.0 || numberOfScuppers.isInfinite() || numberOfScuppers.isNaN())) {
+            DecimalFormat decimalFormat = new DecimalFormat("##.##");
+            return Double.valueOf(decimalFormat.format(numberOfScuppers));
+        } else {
+            return 0d;
+        }
+
+    }
+
     private Double checkIfDoubleCorrectAndConvert(String number) {
-        return Double.parseDouble(number);
+        if(number.isEmpty() || number.isBlank() || number.matches("\\D*")){
+            return 0.0;
+        } else {
+            return Double.valueOf(number);
+
+        }
+
+    }
+
+    private Double checkBottomScupperLevelOverRoofOrReturnDefaultValue(String bottomScupperLevelOverRoof) {
+        if(bottomScupperLevelOverRoof.isEmpty() || bottomScupperLevelOverRoof.isBlank() || bottomScupperLevelOverRoof.matches("\\D*")) {
+            return 5.0;
+        }
+        return Double.valueOf(bottomScupperLevelOverRoof);
+    }
+
+    private Double checkWaterLevelOrReturnDefaultValue(String waterLevel) {
+        if(waterLevel.isEmpty() || waterLevel.isBlank()  || waterLevel.matches("\\D*")) {
+            return 10.0;
+        }
+        return Double.valueOf(waterLevel);
     }
 
     public Scupper addScupper(Scupper scupper) {
@@ -75,4 +112,14 @@ public class ScupperService {
         return new ArrayList<>(scuppers.values());
     }
 
+    public List<Scupper> getScuppersByProjectName(String phrase) {
+        return scuppers.values().stream()
+                .filter(e -> e.getProjectName().toLowerCase().matches(".*" + phrase.toLowerCase() + ".*"))
+                .collect(Collectors.toList());
+    }
+
+    public List<Scupper> clearAllSavedScuppers() {
+        scuppers.clear();
+        return new ArrayList<>(scuppers.values());
+    }
 }
