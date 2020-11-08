@@ -47,6 +47,11 @@ public class ScupperController {
         return scupperService.clearAllSavedScuppers();
     }
 
+    @DeleteMapping("/{id}")
+    public List<Scupper> deleteScupper(@PathVariable("id") final String  id) {
+        return scupperService.deleteScupper(id);
+    }
+
 
     @PostMapping
     public Scupper addScupper(@RequestBody final Scupper scupper) {

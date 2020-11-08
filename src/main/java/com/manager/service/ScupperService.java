@@ -25,21 +25,17 @@ public class ScupperService {
                                  String bottomScupperLevelOverRoof,
                                  String waterLevel) {
 
-
         Double roofAreaNo = checkIfDoubleCorrectAndConvert(roofArea);
         Double scupperSideXNo = checkIfDoubleCorrectAndConvert(scupperSideX);
         Double scupperSideYNo = checkIfDoubleCorrectAndConvert(scupperSideY);
         Double bottomScupperLevelOverRoofNo = checkBottomScupperLevelOverRoofOrReturnDefaultValue(bottomScupperLevelOverRoof);
         Double waterLevelNo = checkWaterLevelOrReturnDefaultValue(waterLevel);
 
-
-
         double numberOfScuppers = 0.0;
         double activeScupperArea = 0.0;
+
         double realScupperArea = scupperSideXNo * scupperSideYNo;
-
         double allScuppersArea = roofAreaNo * 0.03 * 0.8 * 25;
-
         double activeScupperSideYNo = waterLevelNo - bottomScupperLevelOverRoofNo;
         double topScupperLevelOverRoof = bottomScupperLevelOverRoofNo + scupperSideYNo;
 
@@ -63,12 +59,20 @@ public class ScupperService {
                 .setWaterLevel(waterLevelNo)
                 .setBottomScupperLevelOverRoof(bottomScupperLevelOverRoofNo)
                 .setNumberOfScuppers(RoundToTwoDecimalPlaces(numberOfScuppers))
-                .setNumberOfScuppersRound(Math.ceil(numberOfScuppers))
+                .setNumberOfScuppersRound(ceilNumberOfScuppers(numberOfScuppers))
                 .build();
     }
 
+    private Double ceilNumberOfScuppers(Double numberOfScuppers) {
+        double ceilNumberOfScuppers = Math.ceil(numberOfScuppers);
+        if(ceilNumberOfScuppers == 1) {
+            return 2.0;
+        }
+        return ceilNumberOfScuppers;
+    }
+
     private Double RoundToTwoDecimalPlaces(Double numberOfScuppers) {
-        if(!(numberOfScuppers == 0.0 || numberOfScuppers.isInfinite() || numberOfScuppers.isNaN())) {
+        if(!(numberOfScuppers <= 0.0 || numberOfScuppers.isInfinite() || numberOfScuppers.isNaN())) {
             DecimalFormat decimalFormat = new DecimalFormat("##.##");
             return Double.valueOf(decimalFormat.format(numberOfScuppers));
         } else {
@@ -80,25 +84,25 @@ public class ScupperService {
     private Double checkIfDoubleCorrectAndConvert(String number) {
         if(number.isEmpty() || number.isBlank() || number.matches("\\D*")){
             return 0.0;
-        } else {
-            return Double.valueOf(number);
-
         }
-
+            double convertedNumber = Double.parseDouble(number);
+            return Math.max(convertedNumber, 0.0);
     }
 
     private Double checkBottomScupperLevelOverRoofOrReturnDefaultValue(String bottomScupperLevelOverRoof) {
         if(bottomScupperLevelOverRoof.isEmpty() || bottomScupperLevelOverRoof.isBlank() || bottomScupperLevelOverRoof.matches("\\D*")) {
             return 5.0;
         }
-        return Double.valueOf(bottomScupperLevelOverRoof);
+        double convertedBottomScupperLevelOverRoof = Double.parseDouble(bottomScupperLevelOverRoof);
+        return Math.max(convertedBottomScupperLevelOverRoof, 0.0);
     }
 
     private Double checkWaterLevelOrReturnDefaultValue(String waterLevel) {
         if(waterLevel.isEmpty() || waterLevel.isBlank()  || waterLevel.matches("\\D*")) {
             return 10.0;
         }
-        return Double.valueOf(waterLevel);
+        double convertedWaterLevel = Double.parseDouble(waterLevel);
+        return Math.max(convertedWaterLevel, 0.0);
     }
 
     public Scupper addScupper(Scupper scupper) {
@@ -120,6 +124,11 @@ public class ScupperService {
 
     public List<Scupper> clearAllSavedScuppers() {
         scuppers.clear();
+        return new ArrayList<>(scuppers.values());
+    }
+
+    public List<Scupper> deleteScupper(String id) {
+        scuppers.remove(Integer.valueOf(id));
         return new ArrayList<>(scuppers.values());
     }
 }

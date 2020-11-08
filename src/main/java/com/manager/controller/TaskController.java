@@ -37,8 +37,6 @@ public class TaskController {
         return taskService.deleteTask(id);
     }
 
-    // ------------------------------------------------------------
-
     @GetMapping("/archive")
     public List<Task> getArchivedTask() {
         return taskService.getArchiveTasks();
