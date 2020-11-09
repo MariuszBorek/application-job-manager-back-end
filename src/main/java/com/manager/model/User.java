@@ -20,8 +20,7 @@ public class User {
                 String surname,
                 String email,
                 String password,
-                Map<Integer,
-                        Project> projects) {
+                Map<Integer, Project> projects) {
         this.id = id;
         this.name = name;
         this.surname = surname;
