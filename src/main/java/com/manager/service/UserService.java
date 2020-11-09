@@ -1,7 +1,5 @@
 package com.manager.service;
 
-import com.manager.model.Note;
-import com.manager.model.Task;
 import com.manager.model.User;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,13 @@ public class UserService {
         user.setId(id);
         users.put(id, user);
         return user;
+    }
+
+    public User getUser(String email, String password) {
+        return users.values().stream()
+                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .findFirst()
+                .orElseThrow();
     }
 
 }

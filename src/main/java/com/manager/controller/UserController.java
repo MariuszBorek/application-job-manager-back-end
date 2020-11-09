@@ -23,6 +23,12 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+    @GetMapping("/login/{email}/{password}")
+    public User getUser(@PathVariable("email") final String email,
+                        @PathVariable("password") final String password) {
+        return userService.getUser(email, password);
+    }
+
     @PostMapping
     public User addUser(@RequestBody final User user) {
         return userService.addUser(user);
