@@ -16,32 +16,32 @@ public class TaskService {
         id = id + 1;
     }
 
-    public List<Task> findAllTask() {
-        return new ArrayList<>(tasks.values());
-    }
+//    public List<Task> findAllTask() {
+//        return new ArrayList<>(tasks.values());
+//    }
 
-    public Task addTask(Task task) {
-        autoIncrement();
-        task.setId(id);
-        tasks.put(id, task);
-        return task;
-    }
+//    public Task addTask(Task task) {
+//        autoIncrement();
+//        task.setId(id);
+//        tasks.put(id, task);
+//        return task;
+//    }
 
-    public Task deleteTask(Integer id) {
-        Task task = tasks.get(id);
-        tasks.remove(task.getId());
-        return task;
-    }
+//    public Task deleteTask(Integer id) {
+//        Task task = tasks.get(id);
+//        tasks.remove(task.getId());
+//        return task;
+//    }
 
-    public Task updateTask(Task task) {
-        Task foundTask = tasks.get(task.getId());
-        foundTask.setTopic(task.getTopic());
-        foundTask.setText(task.getText());
-        foundTask.setDate(task.getDate());
-        foundTask.setPriority(task.getPriority());
-        foundTask.setExecution(task.getExecution());
-        return foundTask;
-    }
+//    public Task updateTask(Task task) {
+//        Task foundTask = tasks.get(task.getId());
+//        foundTask.setTopic(task.getTopic());
+//        foundTask.setText(task.getText());
+//        foundTask.setDate(task.getDate());
+//        foundTask.setPriority(task.getPriority());
+//        foundTask.setExecution(task.getExecution());
+//        return foundTask;
+//    }
 
     public List<Task> getArchiveTasks() {
         for (Task task : tasks.values()) {
