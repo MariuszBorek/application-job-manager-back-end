@@ -1,12 +1,10 @@
 package com.manager.controller;
 
-import com.manager.model.Project;
-import com.manager.model.Sheet;
-import com.manager.model.Task;
-import com.manager.model.User;
+import com.manager.model.*;
 import com.manager.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,6 +40,8 @@ public class UserController {
         return userService.addProject(id, project);
     }
 
+    // -------------------- TASKS
+
     @PostMapping("/project/task/{userId}/{projectId}")
     public Task addTaskToProject(@PathVariable("userId") final String userId,
                                  @PathVariable("projectId") final String projectId,
@@ -72,6 +72,77 @@ public class UserController {
                            @PathVariable("projectId") final String projectId,
                            @PathVariable("taskId") final String taskId) {
         return userService.deleteTask(userId, projectId, taskId);
+    }
+// TODO: add archive list for tasks
+//    @GetMapping("/project/task/archive/{userId}/{projectId}")
+//    public List<Task> getArchivedTask(@PathVariable("userId") final String userId,
+//                                      @PathVariable("projectId") final String projectId) {
+//        return userService.getArchiveTasks(userId, projectId);
+//    }
+
+    @PostMapping("/project/task/finished/{userId}/{projectId}")
+    public List<Task> clearFinishedTasks(@PathVariable("userId") final String userId,
+                                         @PathVariable("projectId") final String projectId,
+                                         @RequestBody final List<Task> tasks) {
+        return userService.deleteFinishedTask(userId, projectId, tasks);
+    }
+
+    // -------------------- SHEETS
+
+    @GetMapping("project/sheets/{userId}/{projectId}")
+    public List<Sheet> findAllSheets(@PathVariable("userId") final String userId,
+                                     @PathVariable("projectId") final String projectId) {
+        return userService.findAllSheet(userId, projectId);
+    }
+
+    @PostMapping("/project/sheets/{userId}/{projectId}")
+    public Sheet addSheetToProject(@PathVariable("userId") final String userId,
+                                   @PathVariable("projectId") final String projectId,
+                                   @RequestBody final Sheet sheet) {
+        return userService.addSheet(userId, projectId, sheet);
+    }
+
+    @PutMapping("/project/sheets/{userId}/{projectId}")
+    public Sheet updateTask(@PathVariable("userId") final String userId,
+                            @PathVariable("projectId") final String projectId,
+                            @RequestBody final Sheet sheet) {
+        return userService.updateSheet(userId, projectId, sheet);
+    }
+
+    @DeleteMapping("/project/sheets/{userId}/{projectId}/{sheetId}")
+    public Sheet deleteSheet(@PathVariable("userId") final String userId,
+                             @PathVariable("projectId") final String projectId,
+                             @PathVariable("sheetId") final String sheetId) {
+        return userService.deleteSheet(userId, projectId, sheetId);
+    }
+
+    // -------------------- NOTES
+
+    @GetMapping("project/notes/{userId}/{projectId}")
+    public List<Note> findAllNotes(@PathVariable("userId") final String userId,
+                                   @PathVariable("projectId") final String projectId) {
+        return userService.findAllNotes(userId, projectId);
+    }
+
+    @PostMapping("/project/notes/{userId}/{projectId}")
+    public Note addNoteToProject(@PathVariable("userId") final String userId,
+                                 @PathVariable("projectId") final String projectId,
+                                 @RequestBody final Note note) {
+        return userService.addNote(userId, projectId, note);
+    }
+
+    @PutMapping("/project/notes/{userId}/{projectId}")
+    public Note updateNote(@PathVariable("userId") final String userId,
+                           @PathVariable("projectId") final String projectId,
+                           @RequestBody final Note note) {
+        return userService.updateNote(userId, projectId, note);
+    }
+
+    @DeleteMapping("/project/notes/{userId}/{projectId}/{notesId}")
+    public Note deleteNote(@PathVariable("userId") final String userId,
+                             @PathVariable("projectId") final String projectId,
+                             @PathVariable("notesId") final String notesId) {
+        return userService.deleteNote(userId, projectId, notesId);
     }
 
 }
