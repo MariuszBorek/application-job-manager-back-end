@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/users/projects/tasks")
 @CrossOrigin("*")
 public class TaskController {
 
@@ -17,33 +17,47 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping
-    public List<Task> findAllTasks() {
-        return taskService.findAllTask();
+    @PostMapping("/{userId}/{projectId}")
+    public Task addTaskToProject(@PathVariable("userId") final String userId,
+                                 @PathVariable("projectId") final String projectId,
+                                 @RequestBody final Task task) {
+        return taskService.addTask(userId, projectId, task);
     }
 
-    @PostMapping
-    public Task addTask(@RequestBody final Task task) {
-        return taskService.addTask(task);
+
+    @GetMapping("/{userId}/{projectId}")
+    public List<Task> findAllTasks(@PathVariable("userId") final String userId,
+                                   @PathVariable("projectId") final String projectId) {
+        return taskService.findAllTasks(userId, projectId);
     }
 
-    @PutMapping("/update")
-    public Task updateTask(@RequestBody final Task task) {
-        return taskService.updateTask(task);
+    @PutMapping("/{userId}/{projectId}")
+    public Task updateTask(@PathVariable("userId") final String userId,
+                           @PathVariable("projectId") final String projectId,
+                           @RequestBody final Task task) {
+        return taskService.updateTask(userId, projectId, task);
     }
 
-    @DeleteMapping("/{id}")
-    public Task deleteTask(@PathVariable("id") final Integer id) {
-        return taskService.deleteTask(id);
+
+    @DeleteMapping("/{userId}/{projectId}/{taskId}")
+    public void deleteTask(@PathVariable("userId") final String userId,
+                           @PathVariable("projectId") final String projectId,
+                           @PathVariable("taskId") final String taskId) {
+        taskService.deleteTask(userId, projectId, taskId);
     }
 
-    @GetMapping("/archive")
-    public List<Task> getArchivedTask() {
-        return taskService.getArchiveTasks();
-    }
+// TODO: add archive list for tasks
+//    @GetMapping("/project/task/archive/{userId}/{projectId}")
+//    public List<Task> getArchivedTask(@PathVariable("userId") final String userId,
+//                                      @PathVariable("projectId") final String projectId) {
+//        return userService.getArchiveTasks(userId, projectId);
+//    }
 
-    @PostMapping("/finished")
-    public List<Task> clearFinishedTasks(@RequestBody final List<Task> tasks) {
-        return taskService.deleteFinishedTask(tasks);
+    
+    @PostMapping("/finished/{userId}/{projectId}")
+    public List<Task> clearFinishedTasks(@PathVariable("userId") final String userId,
+                                         @PathVariable("projectId") final String projectId,
+                                         @RequestBody final List<Task> tasks) {
+        return taskService.deleteFinishedTask(userId, projectId, tasks);
     }
 }
