@@ -57,5 +57,4 @@ public class ScupperController {
     public Scupper addScupper(@RequestBody final Scupper scupper) {
         return scupperService.addScupper(scupper);
     }
-
 }

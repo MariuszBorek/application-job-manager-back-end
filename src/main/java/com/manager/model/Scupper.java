@@ -157,3 +157,4 @@ public class Scupper {
         return Objects.hash(id, projectName, roofArea, scupperSideX, scupperSideY, realScupperArea, activeScupperArea, waterLevel, bottomScupperLevelOverRoof, numberOfScuppers, numberOfScuppersRound);
     }
 }
+
