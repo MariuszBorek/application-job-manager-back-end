@@ -1,16 +1,41 @@
 package com.manager.model;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Project {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String title;
     private String description;
-    private Map<Integer, Task> tasks;
-    private Map<Integer, Sheet> sheets;
-    private Map<Integer, Note> notes;
+
+    @JsonIgnore
+    @ManyToOne
+    private User user;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "project")
+    private List<Sheet> sheets;
+
+    @OneToMany(mappedBy = "project")
+    private List<Note> notes;
+
+    public Project() {
+    }
+
+    public Project(String title, String description, User user) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;
@@ -36,27 +61,35 @@ public class Project {
         this.description = description;
     }
 
-    public Map<Integer, Task> getTasks() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Map<Integer, Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public Map<Integer, Sheet> getSheets() {
+    public List<Sheet> getSheets() {
         return sheets;
     }
 
-    public void setSheets(Map<Integer, Sheet> sheets) {
+    public void setSheets(List<Sheet> sheets) {
         this.sheets = sheets;
     }
 
-    public Map<Integer, Note> getNotes() {
+    public List<Note> getNotes() {
         return notes;
     }
 
-    public void setNotes(Map<Integer, Note> notes) {
+    public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
 
@@ -67,11 +100,12 @@ public class Project {
         Project project = (Project) o;
         return Objects.equals(id, project.id) &&
                 Objects.equals(title, project.title) &&
-                Objects.equals(description, project.description);
+                Objects.equals(description, project.description) &&
+                Objects.equals(user, project.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description);
+        return Objects.hash(id, title, description, user);
     }
 }

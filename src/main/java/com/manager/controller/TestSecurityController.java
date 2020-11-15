@@ -17,8 +17,8 @@ public class TestSecurityController {
 //        return "authenticated succesfully";
 //    }
 
-    @GetMapping
-    public Note getNote() {
-        return new Note(1, "jakaś ciekawa notatka");
-    }
+//    @GetMapping
+//    public Note getNote() {
+//        return new Note(1, "jakaś ciekawa notatka");
+//    }
 }

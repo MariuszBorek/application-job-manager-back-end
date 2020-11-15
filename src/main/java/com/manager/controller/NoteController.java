@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api/users/projects/notes")
 @CrossOrigin("*")
 public class NoteController {
 
@@ -17,24 +17,31 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping
-    public List<Note> findAllNotes() {
-        return noteService.findAllNotes();
+    @GetMapping("/{userId}/{projectId}")
+    public List<Note> findAllNotes(@PathVariable("userId") final String userId,
+                                   @PathVariable("projectId") final String projectId) {
+        return noteService.findAllNotes(userId, projectId);
     }
 
-    @PostMapping
-    public Note addNote(@RequestBody final Note note) {
-        return noteService.addNote(note);
+    @PostMapping("/{userId}/{projectId}")
+    public Note addNoteToProject(@PathVariable("userId") final String userId,
+                                 @PathVariable("projectId") final String projectId,
+                                 @RequestBody final Note note) {
+        return noteService.addNote(userId, projectId, note);
     }
 
-    @PutMapping("/update")
-    public Note updateNote(@RequestBody final Note note) {
-        return noteService.updateNote(note);
+    @PutMapping("/{userId}/{projectId}")
+    public Note updateNote(@PathVariable("userId") final String userId,
+                           @PathVariable("projectId") final String projectId,
+                           @RequestBody final Note note) {
+        return noteService.updateNote(userId, projectId, note);
     }
 
-    @DeleteMapping("/{id}")
-    public Note deleteNote(@PathVariable final Integer id) {
-        return noteService.deleteNote(id);
+    @DeleteMapping("/{userId}/{projectId}/{notesId}")
+    public void deleteNote(@PathVariable("userId") final String userId,
+                           @PathVariable("projectId") final String projectId,
+                           @PathVariable("notesId") final String notesId) {
+        noteService.deleteNote(userId, projectId, notesId);
     }
 
 }

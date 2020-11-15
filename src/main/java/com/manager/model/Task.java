@@ -1,14 +1,18 @@
 package com.manager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@NoArgsConstructor
+@Entity
 public class Task {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String topic;
     private String text;
@@ -16,18 +20,20 @@ public class Task {
     private Boolean priority;
     private Boolean execution;
 
-    public Task(Integer id,
-                String topic,
-                String text,
-                LocalDate date,
-                Boolean priority,
-                Boolean execution) {
-        this.id = id;
+    @JsonIgnore
+    @ManyToOne
+    private Project project;
+
+    public Task() {
+    }
+
+    public Task(String topic, String text, LocalDate date, Boolean priority, Boolean execution, Project project) {
         this.topic = topic;
         this.text = text;
         this.date = date;
         this.priority = priority;
         this.execution = execution;
+        this.project = project;
     }
 
     public Integer getId() {
@@ -76,6 +82,14 @@ public class Task {
 
     public void setExecution(Boolean execution) {
         this.execution = execution;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override
