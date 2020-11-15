@@ -1,14 +1,22 @@
 package com.manager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.manager.enums.DrawingType;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
+@Entity
 public class Sheet {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String no;
     private String description;
@@ -16,18 +24,20 @@ public class Sheet {
     private Integer revision;
     private DrawingType type;
 
-    public Sheet(Integer id,
-                 String no,
-                 String description,
-                 LocalDate edition,
-                 Integer revision,
-                 DrawingType type) {
-        this.id = id;
+    @JsonIgnore
+    @ManyToOne
+    private Project project;
+
+    public Sheet() {
+    }
+
+    public Sheet(String no, String description, LocalDate edition, Integer revision, DrawingType type, Project project) {
         this.no = no;
         this.description = description;
         this.edition = edition;
         this.revision = revision;
         this.type = type;
+        this.project = project;
     }
 
     public Integer getId() {
@@ -76,6 +86,14 @@ public class Sheet {
 
     public void setType(DrawingType type) {
         this.type = type;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override

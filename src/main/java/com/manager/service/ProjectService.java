@@ -1,40 +1,41 @@
 package com.manager.service;
 
 import com.manager.model.Project;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import com.manager.model.User;
+import com.manager.repository.ProjectRepository;
+import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Component
+
+
+@Service
 public class ProjectService {
 
-    private final Map<Integer, Project> projects = new HashMap<>();
-    private Integer id = 0;
+    private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
 
-    public void autoIncrement() {
-        id = id + 1;
+    public ProjectService(UserRepository userRepository, ProjectRepository projectRepository) {
+        this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
     }
 
-    public Integer getId() {
-        return id;
+    public Project addProject(String id, Project project) {
+        User foundUser = userRepository.findById(Integer.parseInt(id)).orElseThrow();
+        projectRepository.save(project);
+        project.setUser(foundUser);
+        userRepository.save(foundUser);
+        return project;
     }
 
-    public List<Project> findAllProjects() {
-        return new ArrayList<>(projects.values());
+
+    public List<Project> getUserProjects(String id) {
+        return userRepository.findAll().stream()
+                .filter(user -> user.getId().equals(Integer.parseInt(id)))
+                .findFirst()
+                .orElseThrow()
+                .getProjects();
     }
 
-    public Project addProject(Project project) {
-        autoIncrement();
-        project.setId(id);
-        return projects.put(id, project);
-    }
-
-    public Map<Integer, Project> getProjects() {
-        return projects;
-    }
 }

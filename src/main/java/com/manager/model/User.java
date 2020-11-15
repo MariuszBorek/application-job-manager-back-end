@@ -2,26 +2,29 @@ package com.manager.model;
 
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@NoArgsConstructor
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String surname;
     private String email;
     private String password;
-    private Map<Integer, Project> projects;
 
-    public User(Integer id,
-                String name,
-                String surname,
-                String email,
-                String password,
-                Map<Integer, Project> projects) {
-        this.id = id;
+    @OneToMany(mappedBy = "user")
+    private List<Project> projects;
+
+    public User() {
+    }
+
+    public User(String name, String surname, String email, String password, List<Project> projects) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -69,11 +72,11 @@ public class User {
         this.password = password;
     }
 
-    public Map<Integer, Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Map<Integer, Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
 
@@ -86,11 +89,12 @@ public class User {
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password);
+                Objects.equals(password, user.password) &&
+                Objects.equals(projects, user.projects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, password);
+        return Objects.hash(id, name, surname, email, password, projects);
     }
 }

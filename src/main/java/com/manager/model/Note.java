@@ -1,17 +1,26 @@
 package com.manager.model;
 
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 
-@NoArgsConstructor
+@Entity
 public class Note {
+
+    @Id
+    @GeneratedValue
     private Integer id;
     private String text;
 
-    public Note(Integer id, String text) {
-        this.id = id;
-        this.text = text;
+    @JsonIgnore
+    @ManyToOne
+    private Project project;
+
+    public Note() {
     }
 
     public Integer getId() {
@@ -30,13 +39,21 @@ public class Note {
         this.text = text;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Note note1 = (Note) o;
-        return Objects.equals(id, note1.id) &&
-                Objects.equals(text, note1.text);
+        Note note = (Note) o;
+        return Objects.equals(id, note.id) &&
+                Objects.equals(text, note.text);
     }
 
     @Override
