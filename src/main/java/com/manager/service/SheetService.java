@@ -1,9 +1,7 @@
 package com.manager.service;
 
-import com.manager.enums.DrawingType;
 import com.manager.model.Project;
 import com.manager.model.Sheet;
-import com.manager.model.Task;
 import com.manager.repository.SheetRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -58,7 +56,6 @@ public class SheetService {
         }
         return revision;
     }
-
 
     private Project getUserProject(String userId, String projectId) {
         return userRepository.findById(Integer.parseInt(userId))

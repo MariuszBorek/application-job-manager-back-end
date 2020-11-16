@@ -28,6 +28,9 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Note> notes;
 
+    @OneToMany(mappedBy = "project")
+    private List<TaskArchive> taskArchive;
+
     public Project() {
     }
 
@@ -36,6 +39,7 @@ public class Project {
         this.description = description;
         this.user = user;
     }
+
 
     public Integer getId() {
         return id;
@@ -93,6 +97,14 @@ public class Project {
         this.notes = notes;
     }
 
+    public List<TaskArchive> getTaskArchive() {
+        return taskArchive;
+    }
+
+    public void setTaskArchive(List<TaskArchive> taskArchives) {
+        this.taskArchive = taskArchives;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,12 +112,11 @@ public class Project {
         Project project = (Project) o;
         return Objects.equals(id, project.id) &&
                 Objects.equals(title, project.title) &&
-                Objects.equals(description, project.description) &&
-                Objects.equals(user, project.user);
+                Objects.equals(description, project.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, user);
+        return Objects.hash(id, title, description);
     }
 }

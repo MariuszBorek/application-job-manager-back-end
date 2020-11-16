@@ -2,14 +2,12 @@ package com.manager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.manager.enums.DrawingType;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity

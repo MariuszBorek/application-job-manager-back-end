@@ -1,10 +1,7 @@
 package com.manager.model;
 
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Entity

@@ -3,7 +3,6 @@ package com.manager.service;
 import com.manager.model.Project;
 import com.manager.model.Task;
 import com.manager.model.User;
-import com.manager.repository.ProjectRepository;
 import com.manager.repository.TaskRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
