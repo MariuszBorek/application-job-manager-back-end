@@ -31,6 +31,9 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<TaskArchive> taskArchive;
 
+    @OneToMany(mappedBy = "project")
+    private List<Scupper> scuppers;
+
     public Project() {
     }
 
@@ -103,6 +106,14 @@ public class Project {
 
     public void setTaskArchive(List<TaskArchive> taskArchives) {
         this.taskArchive = taskArchives;
+    }
+
+    public List<Scupper> getScuppers() {
+        return scuppers;
+    }
+
+    public void setScuppers(List<Scupper> scuppers) {
+        this.scuppers = scuppers;
     }
 
     @Override

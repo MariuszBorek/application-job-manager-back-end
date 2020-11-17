@@ -1,9 +1,15 @@
 package com.manager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class Scupper {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String projectName;
     private Double roofArea;
@@ -16,7 +22,25 @@ public class Scupper {
     private Double numberOfScuppers;
     private Double numberOfScuppersRound;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Project project;
+
     public Scupper() {
+    }
+
+    public Scupper(String projectName, Double roofArea, Double scupperSideX, Double scupperSideY, Double realScupperArea, Double activeScupperArea, Double waterLevel, Double bottomScupperLevelOverRoof, Double numberOfScuppers, Double numberOfScuppersRound, Project project) {
+        this.projectName = projectName;
+        this.roofArea = roofArea;
+        this.scupperSideX = scupperSideX;
+        this.scupperSideY = scupperSideY;
+        this.realScupperArea = realScupperArea;
+        this.activeScupperArea = activeScupperArea;
+        this.waterLevel = waterLevel;
+        this.bottomScupperLevelOverRoof = bottomScupperLevelOverRoof;
+        this.numberOfScuppers = numberOfScuppers;
+        this.numberOfScuppersRound = numberOfScuppersRound;
+        this.project = project;
     }
 
     public Integer getId() {
@@ -118,9 +142,17 @@ public class Scupper {
         return this;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public Scupper setProject(Project project) {
+        this.project = project;
+        return this;
+    }
+
     public Scupper build() {
         Scupper scupper = new Scupper();
-        scupper.id = this.id;
         scupper.projectName = this.projectName;
         scupper.roofArea = this.roofArea;
         scupper.scupperSideX = this.scupperSideX;
@@ -131,6 +163,7 @@ public class Scupper {
         scupper.bottomScupperLevelOverRoof = this.bottomScupperLevelOverRoof;
         scupper.numberOfScuppers = this.numberOfScuppers;
         scupper.numberOfScuppersRound = this.numberOfScuppersRound;
+        scupper.project = this.project;
         return scupper;
     }
 

@@ -1,6 +1,9 @@
 package com.manager.service;
 
+import com.manager.model.Project;
 import com.manager.model.Scupper;
+import com.manager.repository.ScupperRepository;
+import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -10,11 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class ScupperService {
 
-    private final Map<Integer, Scupper> scuppers = new HashMap<>();
-    private Integer id = 0;
+    private final UserRepository userRepository;
+    private final ScupperRepository scupperRepository;
 
-    public void autoIncrement() {
-        id = id + 1;
+    public ScupperService(UserRepository userRepository, ScupperRepository scupperRepository) {
+        this.userRepository = userRepository;
+        this.scupperRepository = scupperRepository;
     }
 
     public Scupper countScuppers(String projectName,
@@ -104,30 +108,54 @@ public class ScupperService {
         return Math.max(convertedWaterLevel, 0.0);
     }
 
-    public Scupper addScupper(Scupper scupper) {
-        autoIncrement();
-        scupper.setId(id);
-        scuppers.put(id, scupper);
-        return scupper;
+    public Scupper addScupper(String userId, String projectId, Scupper scupper) {
+        Project userProject = getUserProject(userId, projectId);
+        scupper.setProject(userProject);
+        return scupperRepository.save(scupper);
     }
 
-    public List<Scupper> getScuppers() {
-        return new ArrayList<>(scuppers.values());
+    public List<Scupper> getScuppers(String userId, String projectId) {
+        return getUserProject(userId, projectId).getScuppers();
     }
 
-    public List<Scupper> getScuppersByProjectName(String phrase) {
-        return scuppers.values().stream()
+    public List<Scupper> getScuppersByProjectName(String userId, String projectId, String phrase) {
+        return getUserProject(userId, projectId).getScuppers().stream()
                 .filter(e -> e.getProjectName().toLowerCase().matches(".*" + phrase.toLowerCase() + ".*"))
                 .collect(Collectors.toList());
     }
 
-    public List<Scupper> clearAllSavedScuppers() {
-        scuppers.clear();
-        return new ArrayList<>(scuppers.values());
+    public List<Scupper> clearAllSavedScuppers(String userId, String projectId) {
+        List<Scupper> scuppers = getUserProject(userId, projectId).getScuppers();
+        scupperRepository.deleteAll(scuppers);
+        return scuppers;
     }
 
-    public List<Scupper> deleteScupper(String id) {
-        scuppers.remove(Integer.valueOf(id));
-        return new ArrayList<>(scuppers.values());
+    public List<Scupper> deleteScupper(String userId, String projectId, String scupperId) {
+        Scupper scupper = getScupper(userId, projectId, scupperId);
+        scupperRepository.delete(scupper);
+        return getUserProject(userId, projectId).getScuppers();
+    }
+
+    private Project getUserProject(String userId, String projectId) {
+        return userRepository.findById(Integer.parseInt(userId))
+                .orElseThrow()
+                .getProjects()
+                .stream()
+                .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private Scupper getScupper(String userId, String projectId, String scupperId) {
+        return userRepository.findById(Integer.parseInt(userId))
+                .orElseThrow()
+                .getProjects().stream()
+                .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
+                .findFirst()
+                .orElseThrow()
+                .getScuppers().stream()
+                .filter(scpr -> scpr.getId().equals(Integer.parseInt(scupperId)))
+                .findFirst()
+                .orElseThrow();
     }
 }

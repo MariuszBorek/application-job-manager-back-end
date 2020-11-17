@@ -32,17 +32,17 @@ public class InitService {
 
     private void init() {
         for (int i = 0; i < sampleUsersConfig.getNumberOfUsers(); i++) {
-            User user = new User("user" + i, "Surname" + i, i + "_" + sampleUsersConfig.getMailPrefix(), "qw", null);
+            User user = new User("User_" + i, "Surname_" + i, i + "_" + sampleUsersConfig.getMailPrefix(), "qw");
             userService.addUser(user);
             for (int j = 0; j < sampleUsersConfig.getNumberOfProjects(); j++) {
-                Project project = new Project("Project" + j, "project description" + j, user);
+                Project project = new Project("Project " + j, "project description " + j, user);
                 projectService.addProject(user.getId().toString(), project);
                 for (int k = 0; k < sampleUsersConfig.getNumberOfTasks(); k++) {
-                    Task task = new Task("Topic" + k, "text" + k, LocalDate.now(), false, false,project);
+                    Task task = new Task("Topic " + k, "text " + k, LocalDate.now(), false, false,project);
                     taskService.addTask(user.getId().toString(), project.getId().toString(), task);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
-                    Sheet sheet = new Sheet("ARCH-B-10-" + k, "plan of the building" + k, LocalDate.now(), k, DrawingType.PLAN, project);
+                    Sheet sheet = new Sheet("ARCH-B-10-" + k, "plan of the building " + k, LocalDate.now(), k, DrawingType.PLAN, project);
                     sheetService.addSheet(user.getId().toString(), project.getId().toString(), sheet);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
