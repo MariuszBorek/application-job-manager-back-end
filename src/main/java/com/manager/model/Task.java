@@ -20,7 +20,7 @@ public class Task {
     private Boolean execution;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Project project;
 
     public Task() {

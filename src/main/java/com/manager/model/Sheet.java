@@ -3,10 +3,7 @@ package com.manager.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.manager.enums.DrawingType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -20,10 +17,11 @@ public class Sheet {
     private String description;
     private LocalDate edition;
     private Integer revision;
+    @Enumerated(EnumType.STRING)
     private DrawingType type;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Project project;
 
     public Sheet() {

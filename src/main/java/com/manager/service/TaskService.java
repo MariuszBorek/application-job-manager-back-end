@@ -57,18 +57,6 @@ public class TaskService {
         taskRepository.delete(getTask(userId, projectId, taskId));
     }
 
-// TODO: Fix it! problem: replace lists in all users
-//    public List<Task> getArchiveTasks(String userId, String projectId) {
-//        Project project = getUserProject(userId, projectId);
-//        ArrayList<Task> tasks = new ArrayList<>(project.getTasks().values());
-//        for (Task task : tasks) {
-//            if(task.getExecution().equals(true)) {
-//                archivedTasks.put(task.getId(), task);
-//            }
-//        }
-//        return new ArrayList<>(archivedTasks.values());
-//    }
-
     public List<Task> deleteFinishedTask(String userId, String projectId, List<Task> tasks) {
         for (Task task : tasks) {
             if(task.getExecution().equals(true)) {

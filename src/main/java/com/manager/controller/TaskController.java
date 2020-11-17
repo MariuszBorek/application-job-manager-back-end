@@ -45,14 +45,6 @@ public class TaskController {
                            @PathVariable("taskId") final String taskId) {
         taskService.deleteTask(userId, projectId, taskId);
     }
-
-// TODO: add archive list for tasks
-//    @GetMapping("/project/task/archive/{userId}/{projectId}")
-//    public List<Task> getArchivedTask(@PathVariable("userId") final String userId,
-//                                      @PathVariable("projectId") final String projectId) {
-//        return userService.getArchiveTasks(userId, projectId);
-//    }
-
     
     @PostMapping("/finished/{userId}/{projectId}")
     public List<Task> clearFinishedTasks(@PathVariable("userId") final String userId,

@@ -1,4 +1,4 @@
-package com.manager;
+package com.manager.configuration;
 
 //@Configuration
 public class SecurityConfig {
