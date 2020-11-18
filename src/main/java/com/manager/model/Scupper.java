@@ -29,7 +29,17 @@ public class Scupper {
     public Scupper() {
     }
 
-    public Scupper(String projectName, Double roofArea, Double scupperSideX, Double scupperSideY, Double realScupperArea, Double activeScupperArea, Double waterLevel, Double bottomScupperLevelOverRoof, Double numberOfScuppers, Double numberOfScuppersRound, Project project) {
+    public Scupper(String projectName,
+                   Double roofArea,
+                   Double scupperSideX,
+                   Double scupperSideY,
+                   Double realScupperArea,
+                   Double activeScupperArea,
+                   Double waterLevel,
+                   Double bottomScupperLevelOverRoof,
+                   Double numberOfScuppers,
+                   Double numberOfScuppersRound,
+                   Project project) {
         this.projectName = projectName;
         this.roofArea = roofArea;
         this.scupperSideX = scupperSideX;

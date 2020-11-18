@@ -27,7 +27,12 @@ public class Sheet {
     public Sheet() {
     }
 
-    public Sheet(String no, String description, LocalDate edition, Integer revision, DrawingType type, Project project) {
+    public Sheet(String no,
+                 String description,
+                 LocalDate edition,
+                 Integer revision,
+                 DrawingType type,
+                 Project project) {
         this.no = no;
         this.description = description;
         this.edition = edition;

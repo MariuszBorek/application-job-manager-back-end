@@ -37,7 +37,9 @@ public class Project {
     public Project() {
     }
 
-    public Project(String title, String description, User user) {
+    public Project(String title,
+                   String description,
+                   User user) {
         this.title = title;
         this.description = description;
         this.user = user;

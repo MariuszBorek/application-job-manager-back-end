@@ -17,16 +17,24 @@ public class InitService {
     private final TaskService taskService;
     private final SheetService sheetService;
     private final NoteService noteService;
+    private final ScupperService scupperService;
 
     private final SampleUsersConfig sampleUsersConfig;
 
-    public InitService(UserService userService, ProjectService projectService, TaskService taskService, SheetService sheetService, NoteService noteService, SampleUsersConfig sampleUsersConfig) {
+    public InitService(UserService userService,
+                       ProjectService projectService,
+                       TaskService taskService,
+                       SheetService sheetService,
+                       NoteService noteService,
+                       SampleUsersConfig sampleUsersConfig,
+                       ScupperService scupperService) {
         this.userService = userService;
         this.projectService = projectService;
         this.taskService = taskService;
         this.sheetService = sheetService;
         this.noteService = noteService;
         this.sampleUsersConfig = sampleUsersConfig;
+        this.scupperService = scupperService;
         init();
     }
 
@@ -38,7 +46,14 @@ public class InitService {
                 Project project = new Project("Project " + j, "project description " + j, user);
                 projectService.addProject(user.getId().toString(), project);
                 for (int k = 0; k < sampleUsersConfig.getNumberOfTasks(); k++) {
-                    Task task = new Task("Topic " + k, "text " + k, LocalDate.now(), false, false,project);
+                    Task task = new Task()
+                            .setTopic("Topic " + k)
+                            .setText("text " + k)
+                            .setDate(LocalDate.now())
+                            .setPriority(false)
+                            .setExecution(false)
+                            .setProject(project)
+                            .build();
                     taskService.addTask(user.getId().toString(), project.getId().toString(), task);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
@@ -48,6 +63,20 @@ public class InitService {
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
                     Note note = new Note("text of the note " + k);
                     noteService.addNote(user.getId().toString(), project.getId().toString(), note);
+                }
+                for (int k = 0; k < sampleUsersConfig.getNumberOfScuppers(); k++) {
+                    Scupper scupper = new Scupper()
+                            .setProjectName("Sample building " + k)
+                            .setRoofArea(1123d)
+                            .setScupperSideX(70d)
+                            .setScupperSideY(10d)
+                            .setRealScupperArea(700d)
+                            .setWaterLevel(10d)
+                            .setBottomScupperLevelOverRoof(5d)
+                            .setNumberOfScuppers(3.64)
+                            .setNumberOfScuppersRound(4d)
+                            .build();
+                    scupperService.addScupper(user.getId().toString(), project.getId().toString(), scupper);
                 }
             }
         }
