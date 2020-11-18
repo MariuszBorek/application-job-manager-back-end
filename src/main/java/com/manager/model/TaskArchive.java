@@ -38,56 +38,74 @@ public class TaskArchive {
         return id;
     }
 
-    public void setId(Integer id) {
+    public TaskArchive setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getTopic() {
         return topic;
     }
 
-    public void setTopic(String topic) {
+    public TaskArchive setTopic(String topic) {
         this.topic = topic;
+        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public TaskArchive setText(String text) {
         this.text = text;
+        return this;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public TaskArchive setDate(LocalDate date) {
         this.date = date;
+        return this;
     }
 
     public Boolean getPriority() {
         return priority;
     }
 
-    public void setPriority(Boolean priority) {
+    public TaskArchive setPriority(Boolean priority) {
         this.priority = priority;
+        return this;
     }
 
     public Boolean getExecution() {
         return execution;
     }
 
-    public void setExecution(Boolean execution) {
+    public TaskArchive setExecution(Boolean execution) {
         this.execution = execution;
+        return this;
     }
 
     public Project getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
+    public TaskArchive setProject(Project project) {
         this.project = project;
+        return this;
+    }
+
+    public TaskArchive build() {
+        TaskArchive taskArchive = new TaskArchive();
+        taskArchive.topic = this.topic;
+        taskArchive.text = this.text;
+        taskArchive.date = this.date;
+        taskArchive.priority = this.priority;
+        taskArchive.execution = this.execution;
+        taskArchive.project = this.project;
+        return taskArchive;
     }
 
     @Override

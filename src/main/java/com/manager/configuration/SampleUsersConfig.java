@@ -14,6 +14,7 @@ public class SampleUsersConfig {
     private Integer numberOfTasks;
     private Integer numberOfSheets;
     private Integer numberOfNotes;
+    private Integer numberOfScuppers;
     private String mailPrefix;
 
     public Integer getNumberOfUsers() {
@@ -54,6 +55,14 @@ public class SampleUsersConfig {
 
     public void setNumberOfNotes(Integer numberOfNotes) {
         this.numberOfNotes = numberOfNotes;
+    }
+
+    public Integer getNumberOfScuppers() {
+        return numberOfScuppers;
+    }
+
+    public void setNumberOfScuppers(Integer numberOfScuppers) {
+        this.numberOfScuppers = numberOfScuppers;
     }
 
     public String getMailPrefix() {
