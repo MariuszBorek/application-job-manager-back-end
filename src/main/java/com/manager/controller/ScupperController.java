@@ -32,34 +32,34 @@ public class ScupperController {
                 waterLevel);
     }
 
-    @PostMapping("/{userId}/{projectId}")
+    @PostMapping("/user/{userId}/{projectId}")
     public Scupper addScupper(@PathVariable("userId") final String userId,
                               @PathVariable("projectId") final String projectId,
                               @RequestBody final Scupper scupper) {
         return scupperService.addScupper(userId, projectId, scupper);
     }
 
-    @GetMapping("/{userId}/{projectId}")
+    @GetMapping("/user/{userId}/{projectId}")
     public List<Scupper> findAll(@PathVariable("userId") final String userId,
                                  @PathVariable("projectId") final String projectId) {
         return scupperService.getScuppers(userId, projectId);
     }
 
-    @GetMapping("/find-by-project-name/{userId}/{projectId}/{phrase}")
+    @GetMapping("/user/find-by-project-name/{userId}/{projectId}/{phrase}")
     public List<Scupper> findByProjectName(@PathVariable("userId") final String userId,
                                            @PathVariable("projectId") final String projectId,
                                            @PathVariable("phrase") final String phrase) {
         return scupperService.getScuppersByProjectName(userId, projectId, phrase);
     }
 
-    @DeleteMapping("/{userId}/{projectId}/{scupperId}")
+    @DeleteMapping("/user/{userId}/{projectId}/{scupperId}")
     public List<Scupper> deleteScupper(@PathVariable("userId") final String userId,
                                        @PathVariable("projectId") final String projectId,
                                        @PathVariable("scupperId") final String scupperId) {
         return scupperService.deleteScupper(userId, projectId, scupperId);
     }
 
-    @DeleteMapping("/clear-saved-scuppers/{userId}/{projectId}")
+    @DeleteMapping("/user/clear-saved-scuppers/{userId}/{projectId}")
     public List<Scupper> clearAllSavedScuppers(@PathVariable("userId") final String userId,
                                                @PathVariable("projectId") final String projectId) {
         return scupperService.clearAllSavedScuppers(userId, projectId);

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 @CrossOrigin("*")
 public class UserController {
 
@@ -17,17 +17,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public List<User> findAllUsers() {
         return userService.findAllUsers();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public User addUser(@RequestBody final User user) {
         return userService.addUser(user);
     }
 
-    @GetMapping("/login/{email}/{password}")
+    @GetMapping("/users/login/{email}/{password}")
     public User getUser(@PathVariable("email") final String email,
                         @PathVariable("password") final String password) {
         return userService.getUser(email, password);
