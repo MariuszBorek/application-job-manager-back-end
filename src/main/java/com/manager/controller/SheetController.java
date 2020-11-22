@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/projects/sheets")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class SheetController {
 
     private final SheetService sheetService;
