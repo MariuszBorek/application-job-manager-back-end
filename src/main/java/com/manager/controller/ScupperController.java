@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tools/scuppers")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class ScupperController {
 
     private final ScupperService scupperService;
