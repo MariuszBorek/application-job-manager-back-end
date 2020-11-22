@@ -1,21 +1,44 @@
 package com.manager.configuration;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(@Qualifier("userService") final UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    protected UserDetailsService userDetailsService() {
+        return userDetailsService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/users").hasRole("ADMIN")
-                .antMatchers("/api/users/**").hasRole("USER")
-                .antMatchers("api/tools/scuppers/user/**").hasRole("USER")
+                .antMatchers("/api/users/**").fullyAuthenticated()
+                .antMatchers("api/tools/scuppers/user/**").fullyAuthenticated()
                 .and()
                 .formLogin()
                 .and()
@@ -27,11 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and();
     }
 
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        return daoAuthenticationProvider;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("0_mail@gmail.com").password("{noop}qw").roles("USER")
-                .and()
-                .withUser("1_mail@gmail.com").password("{noop}qw").roles("ADMIN");
+        auth.authenticationProvider(authenticationProvider());
     }
 }
