@@ -29,8 +29,8 @@ public class ScupperService {
                                  String waterLevel) {
 
         Double roofAreaNo = checkIfDoubleCorrectAndConvert(roofArea);
-        Double scupperSideXNo = checkIfDoubleCorrectAndConvert(scupperSideX);
-        Double scupperSideYNo = checkIfDoubleCorrectAndConvert(scupperSideY);
+        Double scupperSideXNo = checkIfScupperSidesAreCorrectAndConvert(scupperSideX);
+        Double scupperSideYNo = checkIfScupperSidesAreCorrectAndConvert(scupperSideY);
         Double bottomScupperLevelOverRoofNo = checkBottomScupperLevelOverRoofOrReturnDefaultValue(bottomScupperLevelOverRoof);
         Double waterLevelNo = checkWaterLevelOrReturnDefaultValue(waterLevel);
 
@@ -90,6 +90,14 @@ public class ScupperService {
         }
             double convertedNumber = Double.parseDouble(number);
             return Math.max(convertedNumber, 0.0);
+    }
+
+    private Double checkIfScupperSidesAreCorrectAndConvert(String number) {
+        if(number.isEmpty() || number.isBlank() || number.matches("\\D*")){
+            return 10.0;
+        }
+        double convertedNumber = Double.parseDouble(number);
+        return Math.max(convertedNumber, 0.0);
     }
 
     private Double checkBottomScupperLevelOverRoofOrReturnDefaultValue(String bottomScupperLevelOverRoof) {
