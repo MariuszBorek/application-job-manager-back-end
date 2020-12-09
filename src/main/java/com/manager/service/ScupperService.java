@@ -16,6 +16,7 @@ public class ScupperService {
     private final UserRepository userRepository;
     private final ScupperRepository scupperRepository;
 
+
     public ScupperService(UserRepository userRepository, ScupperRepository scupperRepository) {
         this.userRepository = userRepository;
         this.scupperRepository = scupperRepository;
@@ -61,12 +62,15 @@ public class ScupperService {
                 .setActiveScupperArea(activeScupperArea)
                 .setWaterLevel(waterLevelNo)
                 .setBottomScupperLevelOverRoof(bottomScupperLevelOverRoofNo)
-                .setNumberOfScuppers(RoundToTwoDecimalPlaces(numberOfScuppers))
+                .setNumberOfScuppers(roundToTwoDecimalPlaces(numberOfScuppers))
                 .setNumberOfScuppersRound(ceilNumberOfScuppers(numberOfScuppers))
                 .build();
     }
 
     private Double ceilNumberOfScuppers(Double numberOfScuppers) {
+        if(numberOfScuppers == null) {
+            throw new IllegalArgumentException();
+        }
         double ceilNumberOfScuppers = Math.ceil(numberOfScuppers);
         if(ceilNumberOfScuppers == 1) {
             return 2.0;
@@ -74,14 +78,16 @@ public class ScupperService {
         return ceilNumberOfScuppers;
     }
 
-    private Double RoundToTwoDecimalPlaces(Double numberOfScuppers) {
+    private Double roundToTwoDecimalPlaces(Double numberOfScuppers) {
+        if(numberOfScuppers == null) {
+            throw new IllegalArgumentException();
+        }
         if(!(numberOfScuppers <= 0.0 || numberOfScuppers.isInfinite() || numberOfScuppers.isNaN())) {
             DecimalFormat decimalFormat = new DecimalFormat("##.##");
             return Double.valueOf(decimalFormat.format(numberOfScuppers));
         } else {
             return 0d;
         }
-
     }
 
     private Double checkIfDoubleCorrectAndConvert(String number) {
@@ -144,7 +150,7 @@ public class ScupperService {
         return getUserProject(userId, projectId).getScuppers();
     }
 
-    private Project getUserProject(String userId, String projectId) {
+    public Project getUserProject(String userId, String projectId) {
         return userRepository.findById(Integer.parseInt(userId))
                 .orElseThrow()
                 .getProjects()
