@@ -1,12 +1,13 @@
 package com.manager.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 //@Profile("dev")
-@ConfigurationProperties(prefix = "jm.config")
+//@ConfigurationProperties(prefix = "jm.config")
 public class SampleUsersConfig {
 
     private Integer numberOfUsers;
@@ -15,6 +16,7 @@ public class SampleUsersConfig {
     private Integer numberOfSheets;
     private Integer numberOfNotes;
     private Integer numberOfScuppers;
+    @Value("${jm.config.mailPrefix}")
     private String mailPrefix;
 
     public Integer getNumberOfUsers() {
