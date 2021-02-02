@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/projects/notes")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 public class NoteController {
 
     private final NoteService noteService;
