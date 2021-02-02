@@ -2,6 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Project;
 import com.manager.model.Scupper;
+import com.manager.model.User;
 import com.manager.repository.ScupperRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
