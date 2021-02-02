@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-@Profile("dev")
+//@Profile("dev")
 public class InitService {
 
     private final UserService userService;
