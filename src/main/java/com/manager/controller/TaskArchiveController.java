@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/projects/tasks/archive")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 public class TaskArchiveController {
 
     private final TaskArchiveService taskArchiveService;
