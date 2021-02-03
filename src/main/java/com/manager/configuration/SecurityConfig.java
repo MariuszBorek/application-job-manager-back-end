@@ -45,10 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and()
-                .logout()
-                .and()
-                .headers().frameOptions().disable()
-                .and();
+                .logout();
+//                .and()
+//                .headers().frameOptions().disable()
+//                .and();
     }
 
     DaoAuthenticationProvider authenticationProvider() {
