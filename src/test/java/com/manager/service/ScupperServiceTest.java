@@ -2,7 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Project;
 import com.manager.model.Scupper;
-import com.manager.model.User;
+import com.manager.model.Users;
 import com.manager.repository.ScupperRepository;
 import com.manager.repository.UserRepository;
 import org.junit.Before;
@@ -17,11 +17,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringRunner.class)
@@ -32,11 +30,11 @@ class ScupperServiceTest {
     private static final String PROJECT_ID = "2";
     private static final String SCUPPER_ID = "3";
 
-    private static final User USER = new User("Jan", "Kowalski", "sample@gmail.com", "qwerty");
+    private static final Users USER = new Users("Jan", "Kowalski", "sample@gmail.com", "qwerty");
     private static final Project PROJECT = new Project("Sample project", "Sample project description", null);
     private static final Scupper SCUPPER = new Scupper("Sample Building", 2123.0,  70.0, 10.0, 700.0, 350.0, 10.0, 5.0, 3.64, 4.0, null);
 
-    private static final User USER_WITH_ID = new User("Jan", "Kowalski", "sample@gmail.com", "qwerty");
+    private static final Users USER_WITH_ID = new Users("Jan", "Kowalski", "sample@gmail.com", "qwerty");
     private static final Project PROJECT_WITH_ID_AND_USER = new Project("Sample project", "Sample project description", USER_WITH_ID);
     private static final Scupper SCUPPER_WITH_ID_AND_PROJECT = new Scupper("Sample Building", 2123.0,  70.0, 10.0, 700.0, 350.0, 10.0, 5.0, 3.64, 4.0, PROJECT_WITH_ID_AND_USER);
 

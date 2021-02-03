@@ -18,21 +18,21 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAllUsers() {
+    public List<Users> findAllUsers() {
         return userRepository.findAll();
     }
 
-    public User addUser(User user) {
+    public Users addUser(Users user) {
         return userRepository.save(user);
     }
 
-    public User getUser(String email, String password) {
+    public Users getUser(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(s);
+        Users user = userRepository.findByEmail(s);
         return new UserDetailsAdapter(user);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue
@@ -18,13 +18,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
 
-    public User() {
+    public Users() {
     }
 
-    public User(String name,
-                String surname,
-                String email,
-                String password) {
+    public Users(String name,
+                 String surname,
+                 String email,
+                 String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -84,7 +84,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        Users user = (Users) o;
         return Objects.equals(id, user.id) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&

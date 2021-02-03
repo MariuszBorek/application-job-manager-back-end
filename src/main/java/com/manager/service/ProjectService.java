@@ -35,7 +35,7 @@ public class ProjectService {
     }
 
     public Project addProject(String id, Project project) {
-        User foundUser = userRepository.findById(Integer.parseInt(id)).orElseThrow();
+        Users foundUser = userRepository.findById(Integer.parseInt(id)).orElseThrow();
         projectRepository.save(project);
         project.setUser(foundUser);
         userRepository.save(foundUser);

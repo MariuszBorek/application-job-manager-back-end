@@ -3,7 +3,6 @@ package com.manager.service;
 import com.manager.configuration.SampleUsersConfig;
 import com.manager.enums.DrawingType;
 import com.manager.model.*;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,7 +39,7 @@ public class InitService {
 
     private void init() {
         for (int i = 0; i < sampleUsersConfig.getNumberOfUsers(); i++) {
-            User user = new User("User_" + i, "Surname_" + i, i + "_" + sampleUsersConfig.getMailPrefix(), "qw");
+            Users user = new Users("User_" + i, "Surname_" + i, i + "_" + sampleUsersConfig.getMailPrefix(), "qw");
             userService.addUser(user);
             for (int j = 0; j < sampleUsersConfig.getNumberOfProjects(); j++) {
                 Project project = new Project("Project " + j, "project description " + j, user);

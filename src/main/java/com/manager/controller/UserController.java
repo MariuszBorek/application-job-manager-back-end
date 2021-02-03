@@ -18,18 +18,18 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> findAllUsers() {
+    public List<Users> findAllUsers() {
         return userService.findAllUsers();
     }
 
     @PostMapping("/create")
-    public User addUser(@RequestBody final User user) {
+    public Users addUser(@RequestBody final Users user) {
         return userService.addUser(user);
     }
 
     @GetMapping("/users/login/{email}/{password}")
-    public User getUser(@PathVariable("email") final String email,
-                        @PathVariable("password") final String password) {
+    public Users getUser(@PathVariable("email") final String email,
+                         @PathVariable("password") final String password) {
         return userService.getUser(email, password);
     }
 }

@@ -1,6 +1,6 @@
 package com.manager.configuration;
 
-import com.manager.model.User;
+import com.manager.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class UserDetailsAdapter implements UserDetails {
 
-  private final User user;
+  private final Users user;
 
-  public UserDetailsAdapter(final User user) {
+  public UserDetailsAdapter(final Users user) {
     this.user = user;
   }
 

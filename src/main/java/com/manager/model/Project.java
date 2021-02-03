@@ -17,7 +17,7 @@ public class Project {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+    private Users user;
 
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
@@ -39,7 +39,7 @@ public class Project {
 
     public Project(String title,
                    String description,
-                   User user) {
+                   Users user) {
         this.title = title;
         this.description = description;
         this.user = user;
@@ -70,11 +70,11 @@ public class Project {
         this.description = description;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

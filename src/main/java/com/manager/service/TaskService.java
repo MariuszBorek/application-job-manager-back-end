@@ -2,7 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Project;
 import com.manager.model.Task;
-import com.manager.model.User;
+import com.manager.model.Users;
 import com.manager.repository.TaskRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class TaskService {
     }
 
     public Task addTask(String userId, String projectId, Task task) {
-        User foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
+        Users foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
         Project foundProject = foundUser.getProjects().stream()
                 .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
                 .findFirst()
@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     public List<Task> findAllTasks(String userId, String projectId) {
-        User foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
+        Users foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
         Project foundProject = foundUser.getProjects().stream()
                 .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
                 .findFirst()
