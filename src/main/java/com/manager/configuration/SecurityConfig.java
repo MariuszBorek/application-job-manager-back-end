@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").fullyAuthenticated()
                 .antMatchers("/h2/**").fullyAuthenticated()
                 .antMatchers("api/tools/scuppers/user/**").fullyAuthenticated()
+                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .and()
