@@ -10,11 +10,17 @@ import org.springframework.stereotype.Component;
 //@ConfigurationProperties(prefix = "jm.config")
 public class SampleUsersConfig {
 
+    @Value("${jm.config.numberOfUsers}")
     private Integer numberOfUsers;
+    @Value("${jm.config.numberOfProjects}")
     private Integer numberOfProjects;
+    @Value("${jm.config.numberOfTasks}")
     private Integer numberOfTasks;
+    @Value("${jm.config.numberOfSheets}")
     private Integer numberOfSheets;
+    @Value("${jm.config.numberOfNotes}")
     private Integer numberOfNotes;
+    @Value("${jm.config.numberOfScuppers}")
     private Integer numberOfScuppers;
     @Value("${jm.config.mailPrefix}")
     private String mailPrefix;
