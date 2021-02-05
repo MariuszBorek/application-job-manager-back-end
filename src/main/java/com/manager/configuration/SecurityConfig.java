@@ -48,9 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .and()
-                .httpBasic();
-//                .and()
-//                .logout();
+                .httpBasic()
+                .and()
+                .logout();
 ////                .and()
 ////                .headers().frameOptions().disable()
 ////                .and();

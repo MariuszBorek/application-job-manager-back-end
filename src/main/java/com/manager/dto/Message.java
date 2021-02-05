@@ -1,4 +1,4 @@
-package com.manager.model;
+package com.manager.dto;
 
 public class Message {
 

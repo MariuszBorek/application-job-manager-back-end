@@ -1,18 +1,11 @@
 package com.manager.service;
 
-import com.manager.model.Project;
-import com.manager.model.Scupper;
-import com.manager.model.Users;
-import com.manager.repository.ScupperRepository;
-import com.manager.repository.UserRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.lang.reflect.InvocationTargetException;
@@ -26,48 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ScupperServiceTest {
 
-    private static final String USER_ID = "1";
-    private static final String PROJECT_ID = "2";
-    private static final String SCUPPER_ID = "3";
-
-    private static final Users USER = new Users("Jan", "Kowalski", "sample@gmail.com", "qwerty");
-    private static final Project PROJECT = new Project("Sample project", "Sample project description", null);
-    private static final Scupper SCUPPER = new Scupper("Sample Building", 2123.0,  70.0, 10.0, 700.0, 350.0, 10.0, 5.0, 3.64, 4.0, null);
-
-    private static final Users USER_WITH_ID = new Users("Jan", "Kowalski", "sample@gmail.com", "qwerty");
-    private static final Project PROJECT_WITH_ID_AND_USER = new Project("Sample project", "Sample project description", USER_WITH_ID);
-    private static final Scupper SCUPPER_WITH_ID_AND_PROJECT = new Scupper("Sample Building", 2123.0,  70.0, 10.0, 700.0, 350.0, 10.0, 5.0, 3.64, 4.0, PROJECT_WITH_ID_AND_USER);
-
-    @Before
-    public void setUp() {
-        USER_WITH_ID.setId(Integer.parseInt(USER_ID));
-
-        PROJECT_WITH_ID_AND_USER.setId(Integer.parseInt(PROJECT_ID));
-        PROJECT_WITH_ID_AND_USER.setUser(USER);
-
-        SCUPPER_WITH_ID_AND_PROJECT.setId(Integer.parseInt(SCUPPER_ID));
-        SCUPPER_WITH_ID_AND_PROJECT.setProject(PROJECT_WITH_ID_AND_USER);
-    }
-
     @SpyBean
     private ScupperService scupperService;
-    @MockBean
-    private UserRepository userRepository;
-    @MockBean
-    private ScupperRepository scupperRepository;
-
-    @Test
-    public void shouldCreateScuppersForParticularUserAndUserProject() {
-//        // when
-//        when(scupperRepository.save(any())).thenReturn(SCUPPER_WITH_ID_AND_PROJECT);
-//
-//        Scupper actual = scupperService.addScupper(USER_ID, PROJECT_ID, SCUPPER);
-//
-//        // then
-//        assertEquals(SCUPPER_WITH_ID_AND_PROJECT, actual);
-
-    }
-
 
     @ParameterizedTest
     @MethodSource("provideDoubleNumbers")

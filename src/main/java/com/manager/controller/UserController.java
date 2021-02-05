@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import com.manager.dto.Message;
 import com.manager.model.*;
 import com.manager.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,11 @@ public class UserController {
     public Users getUser(@PathVariable("email") final String email,
                          @PathVariable("password") final String password) {
         return userService.getUser(email, password);
+    }
+
+    @GetMapping(produces = "application/json")
+    @RequestMapping( "/validateLogin" )
+    public Message validateLogin() {
+        return new Message("User successfully authenticated");
     }
 }
