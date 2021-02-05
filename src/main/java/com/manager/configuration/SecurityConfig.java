@@ -3,6 +3,7 @@ package com.manager.configuration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,19 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http.csrf().disable()
+//                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and().httpBasic();
                 .authorizeRequests()
+                .antMatchers("/api/create/**").permitAll()
                 .antMatchers("/api/users/**").fullyAuthenticated()
                 .antMatchers("/h2/**").fullyAuthenticated()
                 .antMatchers("api/tools/scuppers/user/**").fullyAuthenticated()
                 .and()
                 .formLogin()
                 .and()
-                .httpBasic()
-                .and()
-                .logout();
+                .httpBasic();
 //                .and()
-//                .headers().frameOptions().disable()
-//                .and();
+//                .logout();
+////                .and()
+////                .headers().frameOptions().disable()
+////                .and();
     }
 
     DaoAuthenticationProvider authenticationProvider() {

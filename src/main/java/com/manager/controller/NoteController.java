@@ -17,31 +17,31 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/{userId}/{projectId}")
-    public List<Note> findAllNotes(@PathVariable("userId") final String userId,
+    @GetMapping("/{email}/{projectId}")
+    public List<Note> findAllNotes(@PathVariable("email") final String email,
                                    @PathVariable("projectId") final String projectId) {
-        return noteService.findAllNotes(userId, projectId);
+        return noteService.findAllNotes(email, projectId);
     }
 
-    @PostMapping("/{userId}/{projectId}")
-    public Note addNoteToProject(@PathVariable("userId") final String userId,
+    @PostMapping("/{email}/{projectId}")
+    public Note addNoteToProject(@PathVariable("email") final String email,
                                  @PathVariable("projectId") final String projectId,
                                  @RequestBody final Note note) {
-        return noteService.addNote(userId, projectId, note);
+        return noteService.addNote(email, projectId, note);
     }
 
-    @PutMapping("/{userId}/{projectId}")
-    public Note updateNote(@PathVariable("userId") final String userId,
+    @PutMapping("/{email}/{projectId}")
+    public Note updateNote(@PathVariable("email") final String email,
                            @PathVariable("projectId") final String projectId,
                            @RequestBody final Note note) {
-        return noteService.updateNote(userId, projectId, note);
+        return noteService.updateNote(email, projectId, note);
     }
 
-    @DeleteMapping("/{userId}/{projectId}/{notesId}")
-    public void deleteNote(@PathVariable("userId") final String userId,
+    @DeleteMapping("/{email}/{projectId}/{notesId}")
+    public void deleteNote(@PathVariable("email") final String email,
                            @PathVariable("projectId") final String projectId,
                            @PathVariable("notesId") final String notesId) {
-        noteService.deleteNote(userId, projectId, notesId);
+        noteService.deleteNote(email, projectId, notesId);
     }
 
 }

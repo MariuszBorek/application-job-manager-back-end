@@ -34,8 +34,8 @@ public class ProjectService {
         this.sheetRepository = sheetRepository;
     }
 
-    public Project addProject(String id, Project project) {
-        Users foundUser = userRepository.findById(Integer.parseInt(id)).orElseThrow();
+    public Project addProject(String email, Project project) {
+        Users foundUser = userRepository.findByEmail(email);
         projectRepository.save(project);
         project.setUser(foundUser);
         userRepository.save(foundUser);
@@ -43,9 +43,9 @@ public class ProjectService {
     }
 
 
-    public List<Project> getUserProjects(String userid) {
+    public List<Project> getUserProjects(String email) {
         return userRepository.findAll().stream()
-                .filter(user -> user.getId().equals(Integer.parseInt(userid)))
+                .filter(user -> user.getEmail().equals(email))
                 .findFirst()
                 .orElseThrow()
                 .getProjects();

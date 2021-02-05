@@ -17,39 +17,39 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping("/{userId}/{projectId}")
-    public Task addTaskToProject(@PathVariable("userId") final String userId,
+    @PostMapping("/{email}/{projectId}")
+    public Task addTaskToProject(@PathVariable("email") final String email,
                                  @PathVariable("projectId") final String projectId,
                                  @RequestBody final Task task) {
-        return taskService.addTask(userId, projectId, task);
+        return taskService.addTask(email, projectId, task);
     }
 
 
-    @GetMapping("/{userId}/{projectId}")
-    public List<Task> findAllTasks(@PathVariable("userId") final String userId,
+    @GetMapping("/{email}/{projectId}")
+    public List<Task> findAllTasks(@PathVariable("email") final String email,
                                    @PathVariable("projectId") final String projectId) {
-        return taskService.findAllTasks(userId, projectId);
+        return taskService.findAllTasks(email, projectId);
     }
 
-    @PutMapping("/{userId}/{projectId}")
-    public Task updateTask(@PathVariable("userId") final String userId,
+    @PutMapping("/{email}/{projectId}")
+    public Task updateTask(@PathVariable("email") final String email,
                            @PathVariable("projectId") final String projectId,
                            @RequestBody final Task task) {
-        return taskService.updateTask(userId, projectId, task);
+        return taskService.updateTask(email, projectId, task);
     }
 
 
-    @DeleteMapping("/{userId}/{projectId}/{taskId}")
-    public void deleteTask(@PathVariable("userId") final String userId,
+    @DeleteMapping("/{email}/{projectId}/{taskId}")
+    public void deleteTask(@PathVariable("email") final String email,
                            @PathVariable("projectId") final String projectId,
                            @PathVariable("taskId") final String taskId) {
-        taskService.deleteTask(userId, projectId, taskId);
+        taskService.deleteTask(email, projectId, taskId);
     }
     
-    @PostMapping("/finished/{userId}/{projectId}")
-    public List<Task> clearFinishedTasks(@PathVariable("userId") final String userId,
+    @PostMapping("/finished/{email}/{projectId}")
+    public List<Task> clearFinishedTasks(@PathVariable("email") final String email,
                                          @PathVariable("projectId") final String projectId,
                                          @RequestBody final List<Task> tasks) {
-        return taskService.deleteFinishedTask(userId, projectId, tasks);
+        return taskService.deleteFinishedTask(email, projectId, tasks);
     }
 }

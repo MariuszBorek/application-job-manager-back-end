@@ -18,11 +18,11 @@ public class TaskArchiveController {
         this.taskArchiveService = taskArchiveService;
     }
 
-    @PostMapping("/{userId}/{projectId}")
-    public List<TaskArchive> clearFinishedTasks(@PathVariable("userId") final String userId,
+    @PostMapping("/{email}/{projectId}")
+    public List<TaskArchive> clearFinishedTasks(@PathVariable("email") final String email,
                                                 @PathVariable("projectId") final String projectId,
                                                 @RequestBody final List<Task> tasks) {
-        return taskArchiveService.addArchivedTasks(userId, projectId, tasks);
+        return taskArchiveService.addArchivedTasks(email, projectId, tasks);
     }
 
 }

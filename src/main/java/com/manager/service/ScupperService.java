@@ -2,6 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Project;
 import com.manager.model.Scupper;
+import com.manager.model.Users;
 import com.manager.repository.ScupperRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -122,32 +123,34 @@ public class ScupperService {
         return Math.max(convertedWaterLevel, 0.0);
     }
 
-    public Scupper addScupper(String userId, String projectId, Scupper scupper) {
-        Project userProject = getUserProject(userId, projectId);
+    public Scupper addScupper(String email, String projectId, Scupper scupper) {
+        Project userProject = getUserProject(userRepository.findByEmail(email).getId().toString(), projectId);
         scupper.setProject(userProject);
         return scupperRepository.save(scupper);
     }
 
-    public List<Scupper> getScuppers(String userId, String projectId) {
-        return getUserProject(userId, projectId).getScuppers();
+    public List<Scupper> getScuppers(String email, String projectId) {
+        return getUserProject(userRepository.findByEmail(email).getId().toString(), projectId).getScuppers();
     }
 
-    public List<Scupper> getScuppersByProjectName(String userId, String projectId, String phrase) {
-        return getUserProject(userId, projectId).getScuppers().stream()
+    public List<Scupper> getScuppersByProjectName(String email, String projectId, String phrase) {
+        return getUserProject(userRepository.findByEmail(email).getId().toString(), projectId)
+                .getScuppers().stream()
                 .filter(e -> e.getProjectName().toLowerCase().matches(".*" + phrase.toLowerCase() + ".*"))
                 .collect(Collectors.toList());
     }
 
-    public List<Scupper> clearAllSavedScuppers(String userId, String projectId) {
-        List<Scupper> scuppers = getUserProject(userId, projectId).getScuppers();
+    public List<Scupper> clearAllSavedScuppers(String email, String projectId) {
+        List<Scupper> scuppers = getUserProject(userRepository.findByEmail(email).getId().toString(), projectId).getScuppers();
         scupperRepository.deleteAll(scuppers);
         return scuppers;
     }
 
-    public List<Scupper> deleteScupper(String userId, String projectId, String scupperId) {
-        Scupper scupper = getScupper(userId, projectId, scupperId);
+    public List<Scupper> deleteScupper(String email, String projectId, String scupperId) {
+        Users user = userRepository.findByEmail(email);
+        Scupper scupper = getScupper(user.getId().toString(), projectId, scupperId);
         scupperRepository.delete(scupper);
-        return getUserProject(userId, projectId).getScuppers();
+        return getUserProject(user.getId().toString(), projectId).getScuppers();
     }
 
     public Project getUserProject(String userId, String projectId) {

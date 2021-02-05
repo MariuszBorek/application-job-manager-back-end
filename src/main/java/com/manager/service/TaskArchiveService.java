@@ -3,6 +3,7 @@ package com.manager.service;
 import com.manager.model.Project;
 import com.manager.model.Task;
 import com.manager.model.TaskArchive;
+import com.manager.model.Users;
 import com.manager.repository.TaskArchiveRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class TaskArchiveService {
         this.taskArchiveRepository = taskArchiveRepository;
     }
 
-    public List<TaskArchive> addArchivedTasks(String userId, String projectId, List<Task> tasks) {
+    public List<TaskArchive> addArchivedTasks(String email, String projectId, List<Task> tasks) {
+        Users user = userRepository.findByEmail(email);
         List<TaskArchive> taskArchivesList = new ArrayList<>();
         TaskArchive taskArchive = new TaskArchive();
         for (Task task: tasks) {
@@ -32,13 +34,13 @@ public class TaskArchiveService {
                 taskArchive.setDate(task.getDate());
                 taskArchive.setPriority(task.getPriority());
                 taskArchive.setExecution(task.getExecution());
-                taskArchive.setProject(getUserProject(userId, projectId));
+                taskArchive.setProject(getUserProject(user.getId().toString(), projectId));
                 taskArchiveRepository.save(taskArchive);
                 taskArchivesList.add(taskArchive);
             }
 
         }
-        return getUserProject(userId, projectId).getTaskArchive();
+        return getUserProject(user.getId().toString(), projectId).getTaskArchive();
     }
 
     private Project getUserProject(String userId, String projectId) {

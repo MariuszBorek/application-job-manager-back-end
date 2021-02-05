@@ -21,8 +21,8 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
-    public Task addTask(String userId, String projectId, Task task) {
-        Users foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
+    public Task addTask(String email, String projectId, Task task) {
+        Users foundUser = userRepository.findByEmail(email);
         Project foundProject = foundUser.getProjects().stream()
                 .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
                 .findFirst()
@@ -33,8 +33,8 @@ public class TaskService {
         return task;
     }
 
-    public List<Task> findAllTasks(String userId, String projectId) {
-        Users foundUser = userRepository.findById(Integer.parseInt(userId)).orElseThrow();
+    public List<Task> findAllTasks(String email, String projectId) {
+        Users foundUser = userRepository.findByEmail(email);
         Project foundProject = foundUser.getProjects().stream()
                 .filter(project -> project.getId().equals(Integer.parseInt(projectId)))
                 .findFirst()
@@ -42,8 +42,9 @@ public class TaskService {
         return foundProject.getTasks();
     }
 
-    public Task updateTask(String userId, String projectId, Task task) {
-        Task foundTask = getTask(userId, projectId, task.getId().toString());
+    public Task updateTask(String email, String projectId, Task task) {
+        Users user = userRepository.findByEmail(email);
+        Task foundTask = getTask(user.getId().toString(), projectId, task.getId().toString());
         foundTask.setTopic(task.getTopic());
         foundTask.setText(task.getText());
         foundTask.setDate(task.getDate());
@@ -53,17 +54,19 @@ public class TaskService {
         return foundTask;
     }
 
-    public void deleteTask(String userId, String projectId, String taskId) {
-        taskRepository.delete(getTask(userId, projectId, taskId));
+    public void deleteTask(String email, String projectId, String taskId) {
+        Users user = userRepository.findByEmail(email);
+        taskRepository.delete(getTask(user.getId().toString(), projectId, taskId));
     }
 
-    public List<Task> deleteFinishedTask(String userId, String projectId, List<Task> tasks) {
+    public List<Task> deleteFinishedTask(String email, String projectId, List<Task> tasks) {
+        Users user = userRepository.findByEmail(email);
         for (Task task : tasks) {
             if(task.getExecution().equals(true)) {
                 taskRepository.delete(task);
             }
         }
-        return getUserProject(userId, projectId).getTasks();
+        return getUserProject(user.getId().toString(), projectId).getTasks();
     }
 
 

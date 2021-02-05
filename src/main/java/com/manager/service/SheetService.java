@@ -2,6 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Project;
 import com.manager.model.Sheet;
+import com.manager.model.Users;
 import com.manager.repository.SheetRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,21 @@ public class SheetService {
     }
 
 
-    public Sheet addSheet(String userId, String projectId, Sheet sheet) {
-        Project userProject = getUserProject(userId, projectId);
+    public Sheet addSheet(String email, String projectId, Sheet sheet) {
+        Users user = userRepository.findByEmail(email);
+        Project userProject = getUserProject(user.getId().toString(), projectId);
         sheet.setProject(userProject);
         return sheetRepository.save(sheet);
     }
 
-    public List<Sheet> findAllSheets(String userId, String projectId) {
-        return getUserProject(userId, projectId).getSheets();
+    public List<Sheet> findAllSheets(String email, String projectId) {
+        Users user = userRepository.findByEmail(email);
+        return getUserProject(user.getId().toString(), projectId).getSheets();
     }
 
-    public Sheet updateSheet(String userId, String projectId, Sheet sheet) {
-        Sheet foundSheet = getSheet(userId, projectId, sheet.getId().toString());
+    public Sheet updateSheet(String email, String projectId, Sheet sheet) {
+        Users user = userRepository.findByEmail(email);
+        Sheet foundSheet = getSheet(user.getId().toString(), projectId, sheet.getId().toString());
         foundSheet.setNo(sheet.getNo());
         foundSheet.setDescription(sheet.getDescription());
         foundSheet.setEdition(sheet.getEdition());
@@ -40,8 +44,9 @@ public class SheetService {
         return sheetRepository.save(foundSheet);
     }
 
-    public void deleteSheet(String userId, String projectId, String sheetId) {
-        sheetRepository.delete(getSheet(userId, projectId, sheetId));
+    public void deleteSheet(String email, String projectId, String sheetId) {
+        Users user = userRepository.findByEmail(email);
+        sheetRepository.delete(getSheet(user.getId().toString(), projectId, sheetId));
     }
 
     private Integer checkRevision(Integer revision) {

@@ -17,31 +17,31 @@ public class SheetController {
         this.sheetService = sheetService;
     }
 
-    @GetMapping("/{userId}/{projectId}")
-    public List<Sheet> findAllSheets(@PathVariable("userId") final String userId,
+    @GetMapping("/{email}/{projectId}")
+    public List<Sheet> findAllSheets(@PathVariable("email") final String email,
                                      @PathVariable("projectId") final String projectId) {
-        return sheetService.findAllSheets(userId, projectId);
+        return sheetService.findAllSheets(email, projectId);
     }
 
-    @PostMapping("/{userId}/{projectId}")
-    public Sheet addSheetToProject(@PathVariable("userId") final String userId,
+    @PostMapping("/{email}/{projectId}")
+    public Sheet addSheetToProject(@PathVariable("email") final String email,
                                    @PathVariable("projectId") final String projectId,
                                    @RequestBody final Sheet sheet) {
-        return sheetService.addSheet(userId, projectId, sheet);
+        return sheetService.addSheet(email, projectId, sheet);
     }
 
-    @PutMapping("/{userId}/{projectId}")
-    public Sheet updateTask(@PathVariable("userId") final String userId,
+    @PutMapping("/{email}/{projectId}")
+    public Sheet updateTask(@PathVariable("email") final String email,
                             @PathVariable("projectId") final String projectId,
                             @RequestBody final Sheet sheet) {
-        return sheetService.updateSheet(userId, projectId, sheet);
+        return sheetService.updateSheet(email, projectId, sheet);
     }
 
-    @DeleteMapping("/{userId}/{projectId}/{sheetId}")
-    public void deleteSheet(@PathVariable("userId") final String userId,
+    @DeleteMapping("/{email}/{projectId}/{sheetId}")
+    public void deleteSheet(@PathVariable("email") final String email,
                             @PathVariable("projectId") final String projectId,
                             @PathVariable("sheetId") final String sheetId) {
-        sheetService.deleteSheet(userId, projectId, sheetId);
+        sheetService.deleteSheet(email, projectId, sheetId);
     }
 
 }

@@ -43,7 +43,7 @@ public class InitService {
             userService.addUser(user);
             for (int j = 0; j < sampleUsersConfig.getNumberOfProjects(); j++) {
                 Project project = new Project("Project " + j, "project description " + j, user);
-                projectService.addProject(user.getId().toString(), project);
+                projectService.addProject(user.getEmail(), project);
                 for (int k = 0; k < sampleUsersConfig.getNumberOfTasks(); k++) {
                     Task task = new Task()
                             .setTopic("Topic " + k)
@@ -53,15 +53,15 @@ public class InitService {
                             .setExecution(false)
                             .setProject(project)
                             .build();
-                    taskService.addTask(user.getId().toString(), project.getId().toString(), task);
+                    taskService.addTask(user.getEmail(), project.getId().toString(), task);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
                     Sheet sheet = new Sheet("ARCH-B-10-" + k, "plan of the building " + k, LocalDate.now(), k, DrawingType.PLAN, project);
-                    sheetService.addSheet(user.getId().toString(), project.getId().toString(), sheet);
+                    sheetService.addSheet(user.getEmail(), project.getId().toString(), sheet);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfSheets(); k++) {
                     Note note = new Note("text of the note " + k);
-                    noteService.addNote(user.getId().toString(), project.getId().toString(), note);
+                    noteService.addNote(user.getEmail(), project.getId().toString(), note);
                 }
                 for (int k = 0; k < sampleUsersConfig.getNumberOfScuppers(); k++) {
                     Scupper scupper = new Scupper()
@@ -75,7 +75,7 @@ public class InitService {
                             .setNumberOfScuppers(3.64)
                             .setNumberOfScuppersRound(4d)
                             .build();
-                    scupperService.addScupper(user.getId().toString(), project.getId().toString(), scupper);
+                    scupperService.addScupper(user.getEmail(), project.getId().toString(), scupper);
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.manager.service;
 
 import com.manager.model.Note;
 import com.manager.model.Project;
+import com.manager.model.Users;
 import com.manager.repository.NoteRepository;
 import com.manager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -19,30 +20,31 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Note addNote(String userId, String projectId, Note note) {
-        Project userProject = getUserProject(userId, projectId);
+    public Note addNote(String email, String projectId, Note note) {
+        Project userProject = getUserProject(email, projectId);
         note.setProject(userProject);
         return noteRepository.save(note);
     }
 
-    public List<Note> findAllNotes(String userId, String projectId) {
-        return getUserProject(userId, projectId).getNotes();
+    public List<Note> findAllNotes(String email, String projectId) {
+        return getUserProject(email, projectId).getNotes();
 
     }
 
-    public Note updateNote(String userId, String projectId, Note note) {
-        Note foundNote = getNote(userId, projectId, note.getId().toString());
+    public Note updateNote(String email, String projectId, Note note) {
+        Users user = userRepository.findByEmail(email);
+        Note foundNote = getNote(user.getId().toString(), projectId, note.getId().toString());
         foundNote.setText(note.getText());
         return noteRepository.save(foundNote);
     }
 
-        public void deleteNote(String userId, String projectId, String noteId) {
-        noteRepository.delete(getNote(userId, projectId, noteId));
+        public void deleteNote(String email, String projectId, String noteId) {
+            Users user = userRepository.findByEmail(email);
+            noteRepository.delete(getNote(user.getId().toString(), projectId, noteId));
     }
 
-    private Project getUserProject(String userId, String projectId) {
-        return userRepository.findById(Integer.parseInt(userId))
-                .orElseThrow()
+    private Project getUserProject(String email, String projectId) {
+        return userRepository.findByEmail(email)
                 .getProjects()
                 .stream()
                 .filter(project -> project.getId().equals(Integer.parseInt(projectId)))

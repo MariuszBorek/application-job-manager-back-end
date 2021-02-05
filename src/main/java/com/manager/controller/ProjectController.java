@@ -18,15 +18,15 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PostMapping("/{id}")
-    public Project addProject(@PathVariable("id") final String id,
+    @PostMapping("/{email}")
+    public Project addProject(@PathVariable("email") final String email,
                               @RequestBody final Project project) {
-        return projectService.addProject(id, project);
+        return projectService.addProject(email, project);
     }
 
-    @GetMapping("/{id}")
-    public List<Project> getUser(@PathVariable("id") final String id) {
-        return projectService.getUserProjects(id);
+    @GetMapping("/{email}")
+    public List<Project> getUser(@PathVariable("email") final String email) {
+        return projectService.getUserProjects(email);
     }
 
     @DeleteMapping("/{projectId}")
