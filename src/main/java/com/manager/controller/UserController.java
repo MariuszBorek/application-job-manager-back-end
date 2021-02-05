@@ -39,4 +39,11 @@ public class UserController {
     public Message validateLogin() {
         return new Message("User successfully authenticated");
     }
+
+    @GetMapping(produces = "application/json")
+    @RequestMapping( "/wake-up" )
+    public Message wakeUpServer() {
+        return new Message("ok");
+    }
+
 }
